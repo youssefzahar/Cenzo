@@ -32,7 +32,7 @@ if (isset($_POST['sumbitcommande'])) {
         $idc = time();//id unique :
         $commande = new commande($idc, 1, $q, $_SESSION['sum'], date("Y/m/d"), "en cours de validation",$_POST['adresse'],$_POST['numero']);
         $commandeC = new commandeC();
-
+        $commandeC->ajouterCommande($commande);
 
         foreach ($_SESSION['foods'] as $f) {
 
@@ -44,7 +44,7 @@ if (isset($_POST['sumbitcommande'])) {
         unset($_SESSION['foods']);
         unset($_SESSION['sum']);
 
-        $commandeC->ajouterCommande($commande);
+        
         header('Location: shop_fullwidth.php');
     }
 }

@@ -64,10 +64,17 @@ class CommandeC {
             $query->bindValue(':etat','Confirme');
             $query->execute();
 
+        }catch(PDOException $e){
+            $e->getMessage();
+        }
+    }
+
+    public function sendMail($mail,$message2,$object){
+        try{
             $from = "seifeddine.amara@esprit.tn";
-            $to = "ahmed.louhaichi@esprit.tn";
-            $subject = "Commande";
-            $message = "votre commande a ete confirmer ";
+            $to = $mail;
+            $subject = $object;
+            $message = $message2;
             $headers = "From:" . $from;
             mail($to, $subject, $message, $headers);
 
@@ -87,6 +94,17 @@ class CommandeC {
         }catch(PDOException $e){
             $e->getMessage();
         }
+    }
+
+    public function calculercommandeproduit(){
+         try{
+             $db=config::getConnexion();
+             $query=$db->prepare('SELECT id_produit,COUNT(*) FROM lignecommande GROUP BY id_produit');//reqt
+             $query->execute();
+             return $query->fetchAll();//return ligne dan requette de bd
+         }catch(PDOException $e){
+             $e->getMessage();
+         }
     }
 }
 

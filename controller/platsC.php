@@ -21,7 +21,7 @@
                 $query=$db->prepare('SELECT * FROM plats WHERE id = :id');//reqt
                 $query->bindValue(':id',$id);
                 $query->execute();
-                return $query->fetchAll();//return ligne dan requette de bd
+                return $query->fetch();//return ligne dan requette de bd
             }catch(PDOException $e){
                 $e->getMessage();
             }

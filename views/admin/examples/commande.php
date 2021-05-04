@@ -14,7 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 -->
-        <!-- --------------------------------------------------------- -->
+<!-- --------------------------------------------------------- -->
 
 <?php
 include "../../../config.php";
@@ -29,16 +29,27 @@ if(isset($_POST['remove'])){
     $commandeC->setAnnule($_POST['idcommande']);
     header('Location: commande.php');
 }
+
+
 if(isset($_POST['delete'])){
     $commandeC->delete($_POST['idcommande']);
     header('Location: commande.php');
 }
+
+
 if(isset($_POST['confirme'])){
     $commandeC->setConfirme($_POST['idcommande']);
     header('Location: commande.php');
 }
+
+
+if((isset($_POST['sendmail']))&&(isset($_POST['mail']))&&(isset($_POST['message']))&&(isset($_POST['objet']))){
+    $commandeC->sendMail(($_POST['mail']),($_POST['message']),($_POST['objet']));
+    header('Location: commande.php');
+}
+
 ?>
-        <!-- --------------------------------------------------------- -->
+<!-- --------------------------------------------------------- -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,6 +73,50 @@ if(isset($_POST['confirme'])){
     <link href="../assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet"/>
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../assets/demo/demo.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['bar']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            /*   var data = google.visualization.arrayToDataTable([
+                   ['produit', 'Nombre Commande'],
+                   ['2014', 1000],
+                   ['2015', 1170],
+                   ['2016', 660],
+                   ['2017', 1030]
+               ]);*/
+            <?php
+            $nbproduit=$commandeC->calculercommandeproduit();
+            $platsC= new platsC();
+
+            ?>
+            var dataa=[];
+            var Header= ['produit', 'Nombre Commande'];
+            dataa.push(Header);
+            <?php
+            foreach ($nbproduit as $row){
+            $p=$platsC->findproduit($row[0]);
+
+            ?>
+            dataa.push(['<?php echo $p["nom"] ; ?>',<?php echo $row[1] ?>]);
+            <?php
+            }
+            ?>
+            var data = new google.visualization.arrayToDataTable(dataa);
+            var options = {
+                chart: {
+                    title: 'Company Performance',
+                    subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+                },
+                bars: 'vertical' // Required for Material Bar Charts.
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+    </script>
 </head>
 
 <body class="">
@@ -81,51 +136,9 @@ if(isset($_POST['confirme'])){
         <div class="sidebar-wrapper" id="sidebar-wrapper">
             <ul class="nav">
                 <li>
-                    <a href="./dashboard.html">
+                    <a href="commande.php">
                         <i class="now-ui-icons design_app"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="./icons.html">
-                        <i class="now-ui-icons education_atom"></i>
-                        <p>Icons</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="./map.html">
-                        <i class="now-ui-icons location_map-big"></i>
-                        <p>Maps</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="./notifications.html">
-                        <i class="now-ui-icons ui-1_bell-53"></i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="./user.html">
-                        <i class="now-ui-icons users_single-02"></i>
-                        <p>User Profile</p>
-                    </a>
-                </li>
-                <li class="active ">
-                    <a href="./tables.html">
-                        <i class="now-ui-icons design_bullet-list-67"></i>
-                        <p>Table List</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="./typography.html">
-                        <i class="now-ui-icons text_caps-small"></i>
-                        <p>Typography</p>
-                    </a>
-                </li>
-                <li class="active-pro">
-                    <a href="./upgrade.html">
-                        <i class="now-ui-icons arrows-1_cloud-download-93"></i>
-                        <p>Upgrade to PRO</p>
+                        <p>Commande</p>
                     </a>
                 </li>
             </ul>
@@ -205,7 +218,7 @@ if(isset($_POST['confirme'])){
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                                <!-- --------------------------------------------------------- -->
+                            <!-- --------------------------------------------------------- -->
 
                             <h4 class="card-title"> commande Table</h4>
                         </div>
@@ -265,8 +278,12 @@ if(isset($_POST['confirme'])){
                                                 <?php echo $commande['etat'] ?>
                                             </td>
                                             <td>
+
+                                                <button type="submit" rel="tooltip" title=""  class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-toggle="modal" data-target="#exampleModalCenter">
+                                                    <i class="now-ui-icons ui-1_email-85"></i>
+                                                </button>
                                                 <form method="POST">
-                                                    <button type="submit" rel="tooltip" title="" name="confirme" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Confirme">
+                                                    <button type="submit" rel="tooltip" title="" name="confirme" class="btn btn-success btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="confirme">
                                                         <i class="now-ui-icons ui-1_check"></i>
                                                     </button>
                                                     <button type="submit" rel="tooltip" title="" name="remove" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
@@ -288,16 +305,55 @@ if(isset($_POST['confirme'])){
                                         <?php
                                     }
                                     ?>
-                                            <!-- --------------------------------------------------------- -->
+                                    <!-- --------------------------------------------------------- -->
 
                                     </tbody>
                                 </table>
                                 <a href="generate_pdf.php"  >
                                     pdf
                                 </a>
+
                             </div>
                         </div>
                     </div>
+                    <div id="barchart_material" style="width: 900px; height: 500px;"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Mail</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">À</label>
+                                <input type="email" id="mail" name="mail" placeholder="destinataire" class="form-control" >
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Objet</label>
+                                <input type="text" id="objet" name="objet" class="form-control" placeholder="Objet" >
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Message</label>
+                                <textarea type="number" id="message" name="message" class="form-control" id="recipient-name"> </textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" name="sendmail" class="btn btn-primary">Envoyer Mail</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

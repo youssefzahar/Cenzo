@@ -18,6 +18,7 @@ function Header()
     $this->Cell(80,10,'LISTE DES  Commandes',1,0,'C');
     // Line break
     $this->Ln(20);
+
 }
  
 // Page footer
@@ -29,6 +30,7 @@ function Footer()
     $this->SetFont('Arial','I',8);
     // Page number
     $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
+
 }
 }
  
@@ -42,8 +44,12 @@ $pdf = new PDF();
 //header
 $pdf->AddPage();
 //foter page
-$pdf->AliasNbPages();
-$pdf->SetFont('Arial','B',12);
+
+$image1 = "../assets/img/cenzo.png";
+$pdf-> Image($image1,0,0,35,35);
+
+    $pdf->AliasNbPages();
+$pdf->SetFont('Arial','B',11);
 if (mysqli_num_rows($result) > 0) {
 
     $pdf->Cell(30,10,"id",1,0);
@@ -52,7 +58,8 @@ if (mysqli_num_rows($result) > 0) {
     $pdf->Cell(20,10,"totalprix",1,0);
     $pdf->Cell(25,10,"date",1,0);
     $pdf->Cell(30,10,"adresse",1,0);
-    $pdf->Cell(30,10,"Telephone",1,1);
+    $pdf->Cell(30,10,"Telephone",1,0);
+    $pdf->Cell(20,10,"livree",1,1);
 
 
 ;
@@ -74,10 +81,12 @@ if (mysqli_num_rows($result) > 0) {
           $pdf->Cell(20,10,"{$totalprix} ",1,0);
           $pdf->Cell(25,10,"{$date} ",1,0);
           $pdf->Cell(30,10,"{$adresse} ",1,0);
-          $pdf->Cell(30,10,"{$telephone} ",1,1);
+          $pdf->Cell(30,10,"{$telephone} ",1,0);
+          $pdf->Cell(20,10," ",1,1);
   
           }
-  
+          $image1 = "../assets/img/signature.png";
+          $pdf-> Image($image1,70,200,70,35);
   
   
       } }

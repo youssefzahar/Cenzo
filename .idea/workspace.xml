@@ -18,8 +18,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/controller" />
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\cenzo\controller" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -31,7 +37,9 @@
       <updated>1618581142226</updated>
       <workItem from="1618581143866" duration="798000" />
       <workItem from="1618614102975" duration="29576000" />
-      <workItem from="1619531859490" duration="6759000" />
+      <workItem from="1619531859490" duration="7746000" />
+      <workItem from="1619904129952" duration="13738000" />
+      <workItem from="1620097920981" duration="4384000" />
     </task>
     <servers />
   </component>
@@ -47,6 +55,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1619533616489" />
+    <state x="781" y="243" key="NewPhpClassDialog" timestamp="1619561570626">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="781" y="243" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1619561570626" />
+    <state x="794" y="443" key="NewPhpFileDialog" timestamp="1619561750348">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="794" y="443" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1619561750348" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1618845456919">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
