@@ -105,7 +105,7 @@ header('Location: AfficherAdmins.php');
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#pablo">
+              <a class="nav-link" href="MonProfil.php">
                   <i class="now-ui-icons users_single-02"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Account</span>
@@ -127,18 +127,18 @@ header('Location: AfficherAdmins.php');
                 <h5 class="title">Ajouter Admin</h5>
               </div>
               <div class="card-body">
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" id="form_admin">
                   <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Nom</label>
-                        <input type="text" class="form-control" placeholder="Nom" name="nomuser">
+                        <input type="text" class="form-control" placeholder="Nom" name="nomuser" id="nomuser">
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label for="exampleInputEmail1">Email</label>
-                        <input type="email" class="form-control" placeholder="Email" name="email">
+                        <input type="email" class="form-control" placeholder="Email" name="email" id="email">
                       </div>
                     </div>
                   </div>
@@ -146,13 +146,13 @@ header('Location: AfficherAdmins.php');
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Mot de passe</label>
-                        <input type="text" class="form-control" placeholder="*****" name="mdp">
+                        <input type="text" class="form-control" placeholder="*****" name="mdp" id="mdp">
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>Telephone</label>
-                        <input type="text" class="form-control" placeholder="Telephone" name="tel">
+                        <input type="text" class="form-control" placeholder="Telephone" name="tel" id="tel">
                       </div>
                     </div>
                   </div>
@@ -215,6 +215,11 @@ header('Location: AfficherAdmins.php');
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js'></script>
+
+  <script src="assets/js/Admin.js"></script>
+
 </body>
 
 </html>

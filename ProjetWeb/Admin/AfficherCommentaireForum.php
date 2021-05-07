@@ -1,4 +1,13 @@
 <?php 
+
+session_start();
+
+if(!isset($_SESSION['login']))
+{
+
+    header("location: Login.php");
+}
+
 include  "../Model/Forum.php";
 include  "../Controller/ForumC.php";
 include  "../Model/Commentaire.php";
@@ -88,7 +97,7 @@ $commentaireC= new CommentaireC();
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#pablo">
+              <a class="nav-link" href="MonProfil.php">
                   <i class="now-ui-icons users_single-02"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Account</span>
@@ -127,9 +136,6 @@ $commentaireC= new CommentaireC();
                         Date
                       </th>
                       <th>
-                        Etat
-                      </th>
-                      <th>
                         Supprimer
                       </th>
                     </thead>
@@ -159,27 +165,7 @@ $commentaireC= new CommentaireC();
                     </td>
                     <td><?php echo $row2['com']; ?></td>
                     <td><?php echo $row2['date']; ?></td>
-                                                <td>
-                                          <?php
-                                            if($row2['etat']==1)
-                                                {
-                                                    ?>
-
-                                                <form method="POST" action="NonApprouverCom.php?id=<?PHP echo $row2['id']; ?>&idf=<?php echo $_GET["id"] ?>">
-                                                    <input type="submit" class="btn btn-success" value= "Approuver">
-                                                </form>
-                                                    <?php
-                                                }
-                                                else
-                                                {
-                                                    ?>
-                                                <form method="POST" action="ApprouverCom.php?id=<?PHP echo $row2['id']; ?>&idf=<?php echo $_GET["id"] ?>">
-                                                    <input type="submit" class="btn btn-warning" value= "Non Approuver">
-                                                </form>
-                                                    <?php
-                                                }
-                                            ?>
-                                            </td>
+                                              
                                             <td>
                                                <form method="POST" action="SupprimerCommentaire.php?id=<?PHP echo $row2['id']; ?>&idf=<?php echo $_GET["id"] ?>">
                                                     <input type="submit" class="btn btn-danger" value= "supprimer">

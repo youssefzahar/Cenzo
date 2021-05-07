@@ -1,4 +1,12 @@
 <?php 
+session_start();
+
+if(!isset($_SESSION['login']))
+{
+
+    header("location: Login.php");
+}
+
 include  "../Model/Reclamation.php";
 include  "../Controller/ReclamationC.php";
 
@@ -65,7 +73,7 @@ $reclamationC= new ReclamationC();
             </form>
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="#pablo">
+              <a class="nav-link" href="MonProfil.php">
                   <i class="now-ui-icons media-2_sound-wave"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Stats</span>
@@ -105,6 +113,10 @@ $reclamationC= new ReclamationC();
           <div class="col-md-12">
             <div class="card">
               <div class="card-body">
+              	    <form method="post" action="export.php">
+				     <input type="submit" name="export" class="btn btn-success" value="Export" />
+				    </form>
+
                 <div class="table-responsive">
                   <table class="table">
                     <thead class=" text-primary">
@@ -116,9 +128,6 @@ $reclamationC= new ReclamationC();
                       </th>
                       <th>
                         Description
-                      </th>
-                      <th>
-                        Etat
                       </th>
                       <th>
                         Supprimer

@@ -16,7 +16,7 @@ $commentaireC= new CommentaireC();
 <!-- Mirrored from demo.web3canvas.com/themeforest/tomato/shop_account_detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 11 Apr 2021 14:18:57 GMT -->
 <head>
 <meta charset="utf-8">
-<title>Tomato Responsive Restaurant HTML5 Template</title>
+<title>Mes Publications</title>
 <meta name="author" content="Surjith S M">
 
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
@@ -54,7 +54,7 @@ $commentaireC= new CommentaireC();
 <div class="container">
 <div class="row">
 <div class="col-md-12 text-center">
-<h2 class="text-uppercase">Forums</h2>
+<h2 class="text-uppercase">Publications</h2>
 </div>
 </div>
 </div>
@@ -64,7 +64,7 @@ $commentaireC= new CommentaireC();
 <div class="container">
 <div class="row">
 <div class="col-md-12">
-<h3>Mes Forums</h3>
+<h3>Mes Publications</h3>
 <br>
 <table class="cart-table account-table table table-bordered">
 <thead>

@@ -1,9 +1,19 @@
 <?php 
+
+session_start();
+
+if(!isset($_SESSION['login']))
+{
+
+    header("location: Login.php");
+}
+
 include  "../Model/Forum.php";
 include  "../Controller/ForumC.php";
 
 $forumC= new ForumC();
     $liste=$forumC->afficherForums();
+    $list=$forumC->afficherForumsCategorie();
 
 ?>
 
@@ -27,8 +37,34 @@ $forumC= new ForumC();
   <link href="assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="assets/demo/demo.css" rel="stylesheet" />
-      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-</head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Forum', 'Categories'],
+                <?php
+                    foreach ($list as $row){
+                ?>
+                ['<?php echo $row['categorie']; ?>', <?php echo $forumC->NombreCategorie($row['categorie']);  ?>],
+                <?php
+                }
+                ?>
+                ['', 0]
+            ]);
+
+            var options = {
+                title: 'Les Statistiques'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+    </script></head>
 
 <body class="">
   <div class="wrapper ">
@@ -86,7 +122,7 @@ $forumC= new ForumC();
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#pablo">
+              <a class="nav-link" href="MonProfil.php">
                   <i class="now-ui-icons users_single-02"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Account</span>
@@ -106,6 +142,18 @@ $forumC= new ForumC();
             <div class="card">
               <div class="card-body">
                 <div class="table-responsive">
+                 <form class="form-inline" method="POST" action="pdfForum.php" >
+                      <fieldset >
+
+                      <div class="form-group">
+                  
+                  
+                  <input type="submit" name="telecharger pdf" value="telecharger pdf" class="btn btn-info">
+                </div>
+                      </fieldset>
+                    </form> 
+                                      <div id="piechart" style="width: 900px; height: 500px;"></div>
+
                   <table class="table">
                     <thead class=" text-primary">
                       <th>

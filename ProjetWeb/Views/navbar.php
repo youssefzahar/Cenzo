@@ -63,26 +63,7 @@
 </li>
 </ul>
 </li>
-<li class="dropdown">
-<a href="shop_fullwidth.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop<span class="caret"></span></a>
-<ul class="dropdown-menu">
-<li><a href="shop_fullwidth.html">Shop - Full</a></li>
-<li><a href="shop_left_sidebar.html">Shop - Left Sidebar</a></li>
-<li><a href="shop_right_sidebar.html">Shop - Right Sidebar</a></li>
-<li>
-<a href="shop_single_full.html">Shop - Single <span class="caret-right"></span></a>
-<ul class="dropdown-menu">
-<li><a href="shop_single_full.html">Shop - Full</a></li>
-<li><a href="shop_single_left.html">Shop - Left Sidebar</a></li>
-<li><a href="shop_single_right.html">Shop - Right Sidebar</a></li>
-</ul>
-</li>
-<li><a href="shop_cart.html">Shop - Cart</a></li>
-<li><a href="shop_checkout.html">Shop - Checkout</a></li>
-<li><a href="shop_account.html">Shop - Account</a></li>
-<li><a href="shop_account_detail.html">Shop - Account Detail</a></li>
-</ul>
-</li>
+
 <li><a href="contact.html">Contact</a></li>
             <?php if($_SESSION['client']=="")
             { ?>
@@ -103,11 +84,17 @@
 <a href="AfficherForums.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Forums<span class="caret"></span></a>
 <ul class="dropdown-menu">
 <li><a href="AfficherForums.php">Forums</a></li>
-<li><a href="MesForums.php">Mes Forums</a></li> 
+<li><a href="MesForums.php">Mes Publications</a></li> 
 </ul>
 </li>
-
-<li><a href="AjouterReclamation.php">Reclamation</a></li>
+<li class="dropdown">
+<a href="AjouterReclamation.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reclamations<span class="caret"></span></a>
+<ul class="dropdown-menu">
+<li><a href="AjouterReclamation.php">Ajouter Reclamation</a></li>
+<li><a href="MesReclamations.php">Mes Reclamations</a></li> 
+</ul>
+</li>
+<li><a href="MonProfil.php">Mon Profil</a></li>
 <li><a href="Deconnexion.php">Deconnexion</a></li>
             <?php 
           }

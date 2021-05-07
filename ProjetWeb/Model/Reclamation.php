@@ -4,14 +4,12 @@
 		private $id_Utilisateur;
 		private $sujet;
 		private $description;
-		private $etat;
 
-		function __construct($id_Utilisateur,$sujet,$description,$etat){
+		function __construct($id_Utilisateur,$sujet,$description){
 			
 			$this->id_Utilisateur=$id_Utilisateur;
 			$this->sujet=$sujet;
 			$this->description=$description;
-			$this->etat=$etat;
 		}
 		
 		function getId(){

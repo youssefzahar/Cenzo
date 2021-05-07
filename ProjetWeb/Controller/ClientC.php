@@ -23,6 +23,25 @@ class ClientC{
         }
     }
 
+    function ajouterClientToken($email,$token){
+        $sql="UPDATE client SET mdp=:token WHERE email=:email";
+        $db = config::getConnexion();
+        try{
+        
+        $req=$db->prepare($sql);
+    
+        $req->bindValue(':email',$email);
+        $req->bindValue(':token',password_hash($token, PASSWORD_DEFAULT));
+
+        
+            $req->execute();
+           
+        }
+        catch (Exception $e){
+            echo 'Erreur: '.$e->getMessage();
+        }
+        
+    }
 public function afficherClients(){
     $sql="SELECT * From client";
     $db=config::getConnexion();

@@ -3,9 +3,16 @@
 include "../Model/client.php";
 include "../Controller/ClientC.php";
 
+session_start();
+
+if(isset($_SESSION['idclient']))
+{
+
+    header("location: index.php");
+}
+
 if($_POST['connecter'])
 {
-  session_start();
 
 
    $email=$_POST["email"];
@@ -123,7 +130,7 @@ if($_POST['connecter'])
 <div class="row">
 <div class="form-group">
 <div class="col-md-12">
-<a class="pull-right" href="index.php">(Mot de passe perdu?)</a>
+<a class="pull-right" href="RecupererMdp.php">(Mot de passe perdu?)</a>
 <label>Mot de passe</label>
 <input type="password" value="" class="form-control" name="mdp">
 </div>

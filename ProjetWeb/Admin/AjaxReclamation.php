@@ -23,30 +23,6 @@ else{
                                             ?>
                                             <td><?php echo $row['sujet']; ?></td>
                                             <td><?php echo $row['description']; ?></td>
-                                            <?php 
-                                            if($row['etat']==1)
-                                                {
-                                                    ?>
-                                                <td>
-
-                                                <form method="POST" action="NonApprouverRec.php?id=<?PHP echo $row['id']; ?>">
-                                                    <input type="submit" class="btn btn-success" value= "Approuver">
-                                                </form>
-                                                </td>
-                                                    <?php
-                                                }
-                                                else
-                                                {
-                                                    ?>
-                                                <td>
-                                                <form method="POST" action="ApprouverRec.php?id=<?PHP echo $row['id']; ?>">
-                                                    <input type="submit" class="btn btn-warning" value= "Non Approuver">
-                                                </form>
-                                                </td>
-                                                    <?php
-                                                }
-                                            ?>
-                                            </td>
                                             <td>
                                                <form method="POST" action="SupprimerReclamation.php">
                                                     <input type="submit" class="btn btn-danger" value= "supprimer">

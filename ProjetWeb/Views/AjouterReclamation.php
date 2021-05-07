@@ -8,7 +8,7 @@ $ReclamationC= new ReclamationC();
 
 if($_POST['Ajouter'])
 {
-$Reclamation=new Reclamation($_SESSION['idclient'],$_POST['sujet'],$_POST['description'],0);
+$Reclamation=new Reclamation($_SESSION['idclient'],$_POST['sujet'],$_POST['description']);
 $ReclamationC->ajouterReclamation($Reclamation);
 //header('Location: AfficherReclamations.php'); 
 header('Location: AjouterReclamation.php'); 

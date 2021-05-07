@@ -129,7 +129,7 @@ if($_POST['Ajouter'])
 <div class="comment">
 
 <?php
-				$resultaa = $forumC->affichernomprenom($row1["id_utilisateur"]);
+				$resultaa = $forumC->affichernomprenom($row["id_utilisateur"]);
 				foreach($resultaa as $row2){
 				?>	
 <span class="comment-image">

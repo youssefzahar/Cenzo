@@ -72,7 +72,7 @@ public function afficherForumCategorie($cat){
 }
 
 public function afficherForumsCategorie(){
-    $sql="SELECT DISTINCT categorie,date_creation From Forum where etat=1";
+    $sql="SELECT DISTINCT categorie From Forum";
     $db=config::getConnexion();
     try{
     $liste=$db->query($sql);
