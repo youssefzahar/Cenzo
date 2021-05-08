@@ -19,7 +19,7 @@ try {
   $mail->isHTML(true);
   $mail->Username   = "mohamedothmen.karoui@esprit.tn";  // GMAIL username
   $mail->Password   = "191JMT4524";            // GMAIL password
-  $mail->AddReplyTo(' mohamedothmen.karoui@esprit.tn', 'othmen');
+  $mail->AddReplyTo('mohamedothmen.karoui@esprit.tn', 'othmen');
   $mail->AddAddress($email);
   $mail->SetFrom('mohamedothmen.karoui@esprit.tn', 'othmen');
   $mail->Subject = 'Mot de passe oublie';

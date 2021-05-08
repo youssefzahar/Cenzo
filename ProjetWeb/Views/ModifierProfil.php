@@ -1,62 +1,76 @@
 <?php
 
-include "../Model/client.php";
-include "../Controller/ClientC.php";
-
 session_start();
 
-if(isset($_SESSION['idclient']))
+if(!isset($_SESSION['idclient']))
 {
 
-    header("location: index.php");
+    header("location: Connexion.php");
 }
 
-if($_POST['connecter'])
-{
+include "../Model/Client.php";
+include "../Controller/ClientC.php";
 
 
-   $email=$_POST["email"];
-   $clientC = new ClientC();
-
-   $liste=$clientC->recupereremail($email);
-
-   //var_dump($res);
-    foreach($liste as $row){
-      $mdp=$row['mdp'];
+$clientC = new ClientC();
+$result=$clientC->recupererClient($_GET['id']);
+foreach($result as $row){
+    $id=$row['id'];
+    $nom=$row['nom'];
+    $prenom=$row['prenom'];
+    $email=$row['email'];
+    $mdp=$row['mdp'];
+    $tel=$row['tel'];
+    $adresse=$row['adresse'];
+    $sexe=$row['sexe'];
+    $date_naiss=$row['date_nais'];
+    $image=$row['image'];
     }
-    if (password_verify($_POST["mdp"],$mdp))
+
+
+
+    if($_POST['Modifier'])
     {
-    $liste=$clientC->recupereremail($email);
-     foreach($liste as $row){
-      $id=$row['id'];
-      $nom=$row['nom'];
-      $prenom=$row['prenom'];
-      $email=$row['email'];
-      $mdp=$row['mdp'];
-      $tel=$row['tel'];
-      $adresse=$row['adresse'];
-      $sexe=$row['sexe'];
-      $date_naiss=$row['date_nais'];
-      $image=$row['image'];
-    }
+    if( isset($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['email']) and isset($_POST['mdp']) and isset($_POST['tel']) and isset($_POST['adresse'])){
+    $client=new Client($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['mdp'],$_POST['tel'],$_POST['adresse'],$_POST['sexe'],$_POST['date_nais']);
+    
+        $filename = $_FILES["image"]["name"];
+            $tempname = $_FILES["image"]["tmp_name"];
+    
+        $folder = "./img/client/".$filename ;
+                    if($filename!="")
+            {
+        move_uploaded_file($tempname, $folder);
+        $clientC->ajouterClientimg($_POST['email'],$folder);
+                 $_SESSION['clientimage'] = $folder;
+    
+        }
+    
+    //Partie3
+        if($_POST['mdp'] != "")
+        {
+            $clientC->modifierClientPwd($client,$_GET['id']);
+        }
+        else
+        {
+            $clientC->modifierClient($client,$_GET['id']);
+        }
+             $_SESSION['client'] = $_POST['nom'] ." ".$_POST['prenom'];
+             $_SESSION['clientemail'] = $_POST['email'];
+             $_SESSION['clienttel'] = $_POST['tel'];
+             $_SESSION['clientadresse'] = $_POST['adresse'];
+             $_SESSION['clientsexe'] = $_POST['sexe'];
+             $_SESSION['clientdate_naiss'] = $_POST['date_nais'];
 
-         $_SESSION['idclient'] = $id;
-         $_SESSION['client'] = $nom ." ".$prenom;
-         $_SESSION['clientemail'] = $email;
-         $_SESSION['clienttel'] = $tel;
-         $_SESSION['clientadresse'] = $adresse;
-         $_SESSION['clientsexe'] = $sexe;
-         $_SESSION['clientdate_naiss'] = $date_naiss;
-         $_SESSION['clientimage'] = $image;
-
-         header("location: index.php");
-
-    }
-   else
-   {
-             header("location: Connexion.php");
-   }
+header('Location: MonProfil.php');
+    
+}else{
+    echo "vérifieer les champs";
+    die();
 }
+//*/
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,7 +78,7 @@ if($_POST['connecter'])
 <!-- Mirrored from demo.web3canvas.com/themeforest/tomato/shop_account.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 11 Apr 2021 14:18:39 GMT -->
 <head>
 <meta charset="utf-8">
-<title>Se Connecter</title>
+<title>Modifier Mon Profil</title>
 <meta name="author" content="Surjith S M">
 
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
@@ -102,7 +116,7 @@ if($_POST['connecter'])
 <div class="row">
 <div class="col-md-12 text-center">
 <h2 class="text-uppercase">Compte</h2>
-<p>Veuillez vous connecter ou vous inscrire pour continuer votre achat</p>
+<p>Mofidier mes données</p>
 </div>
 </div>
 </div>
@@ -115,38 +129,84 @@ if($_POST['connecter'])
 <div class="row shop-login">
 <div class="col-md-12">
 <div class="box-content">
-<h3 class="text-center">CLIENT EXISTANT</h3>
+<h3 class="text-center">Modifier mon compte</h3>
 <br>
-<form class="logregform" method="post" enctype="multipart/form-data" >
+<form class="logregform" method="post" enctype="multipart/form-data" id="form_client">
+<div class="clearfix space20"></div>
+<div class="row">
+<div class="form-group">
+<div class="col-md-6">
+<label>Nom</label>
+<input type="text" class="form-control" name="nom" id="nom" value="<?PHP echo $nom ?>">
+</div>
+<div class="col-md-6">
+<label>Prenom</label>
+<input type="text"  class="form-control" name="prenom" id="prenom" value="<?PHP echo $prenom ?>">
+</div>
+</div>
+</div>
 <div class="row">
 <div class="form-group">
 <div class="col-md-12">
-<label>Nom d'utilisateur ou adresse e-mail</label>
-<input type="text" value="" class="form-control" name="email">
+<label>Adresse E-mail</label>
+<input type="text" class="form-control" name="email" id="email" value="<?PHP echo $email ?>">
 </div>
 </div>
 </div>
-<div class="clearfix"></div>
+<div class="clearfix space20"></div>
 <div class="row">
 <div class="form-group">
-<div class="col-md-12">
-<a class="pull-right" href="RecupererMdp.php">(Mot de passe perdu?)</a>
+<div class="col-md-6">
 <label>Mot de passe</label>
-<input type="password" value="" class="form-control" name="mdp">
+<input type="password"  class="form-control" name="mdp" id="mdp" value="">
+</div>
+<div class="col-md-6">
+<label>Telephone</label>
+<input type="text" class="form-control" name="tel" id="tel" value="<?PHP echo $tel ?>">
 </div>
 </div>
 </div>
-<div class="clearfix"></div>
+<div class="clearfix space20"></div>
 <div class="row">
+<div class="form-group">
 <div class="col-md-6">
-<span class="remember-box checkbox">
-<label for="rememberme">
-<input type="checkbox" id="rememberme" name="rememberme">Remember Me
-</label>
-</span>
+<label>Adresse</label>
+<input type="text" class="form-control" name="adresse" id="adresse"  value="<?PHP echo $adresse ?>">
 </div>
 <div class="col-md-6">
-<input class="btn btn-default pull-right" type="submit" value="Se Connecter" name="connecter" id="connecter">
+<label>Date de naissance</label>
+<input type="date" class="form-control" name="date_nais"  value="<?PHP echo $date_naiss ?>">
+
+</div>
+</div>
+</div>
+ <div class="item-select">
+<div class="row">
+<div class="form-group">
+				<div>
+                  <!-- COLOR -->
+                  <label>Sexe</label>
+                  <select class="selectpicker" name="sexe">
+                    <option value="<?PHP echo $sexe ?>">Selectionner un type</option>
+                    <option value="Homme">Homme</option>
+                    <option value="Femme">Femme</option>
+                  </select>
+              </div>
+                <div >
+                    <p>Select image to upload:</p>
+                    <div class="col-10">
+                    <input class="form-control" input type="file" name="image" value="<?php echo $image ?>">
+                    </div>
+                </div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="clearfix space20"></div>
+<div class="col-md-12">
+<div class="space20"></div>
+<input class="btn btn-default pull-right" type="submit" value="Modifier" name="Modifier" id="Modifier">
+
 </div>
 </div>
 </form>
@@ -226,6 +286,9 @@ Wide
 <script src="js/main.js"></script>
 <script src="js/vendor/mc/jquery.ketchup.all.min.js"></script>
 <script src="js/vendor/mc/main.js"></script>
+<script src="js/vendor/validate.js"></script>
+<script src="js/ClientModif.js"></script>
+
 </body>
 
 <!-- Mirrored from demo.web3canvas.com/themeforest/tomato/shop_account.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 11 Apr 2021 14:18:39 GMT -->

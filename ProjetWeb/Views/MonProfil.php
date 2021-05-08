@@ -1,70 +1,41 @@
 <?php
 
-include "../Model/client.php";
-include "../Controller/ClientC.php";
-
 session_start();
 
-if(isset($_SESSION['idclient']))
+if(!isset($_SESSION['idclient']))
 {
 
-    header("location: index.php");
+    header("location: Connexion.php");
 }
 
-if($_POST['connecter'])
-{
+include "../Model/Client.php";
+include "../Controller/ClientC.php";
 
 
-   $email=$_POST["email"];
-   $clientC = new ClientC();
-
-   $liste=$clientC->recupereremail($email);
-
-   //var_dump($res);
-    foreach($liste as $row){
-      $mdp=$row['mdp'];
-    }
-    if (password_verify($_POST["mdp"],$mdp))
-    {
-    $liste=$clientC->recupereremail($email);
-     foreach($liste as $row){
-      $id=$row['id'];
-      $nom=$row['nom'];
-      $prenom=$row['prenom'];
-      $email=$row['email'];
-      $mdp=$row['mdp'];
-      $tel=$row['tel'];
-      $adresse=$row['adresse'];
-      $sexe=$row['sexe'];
-      $date_naiss=$row['date_nais'];
-      $image=$row['image'];
+$clientC = new ClientC();
+$result=$clientC->recupererClient($_SESSION['idclient']);
+foreach($result as $row){
+    $id=$row['id'];
+    $nom=$row['nom'];
+    $prenom=$row['prenom'];
+    $email=$row['email'];
+    $mdp=$row['mdp'];
+    $tel=$row['tel'];
+    $adresse=$row['adresse'];
+    $sexe=$row['sexe'];
+    $date_naiss=$row['date_nais'];
+    $image=$row['image'];
     }
 
-         $_SESSION['idclient'] = $id;
-         $_SESSION['client'] = $nom ." ".$prenom;
-         $_SESSION['clientemail'] = $email;
-         $_SESSION['clienttel'] = $tel;
-         $_SESSION['clientadresse'] = $adresse;
-         $_SESSION['clientsexe'] = $sexe;
-         $_SESSION['clientdate_naiss'] = $date_naiss;
-         $_SESSION['clientimage'] = $image;
 
-         header("location: index.php");
-
-    }
-   else
-   {
-             header("location: Connexion.php");
-   }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/shop_account.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 11 Apr 2021 14:18:39 GMT -->
+<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 11 Apr 2021 14:18:33 GMT -->
 <head>
 <meta charset="utf-8">
-<title>Se Connecter</title>
+<title>Mon Profil</title>
 <meta name="author" content="Surjith S M">
 
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
@@ -95,70 +66,52 @@ if($_POST['connecter'])
 <div class="body">
 <div class="main-wrapper">
 
-    <?php include'navbar.php'  ?>
+<?php include'navbar.php'  ?>
+
 
 <section class="page_header">
 <div class="container">
 <div class="row">
 <div class="col-md-12 text-center">
-<h2 class="text-uppercase">Compte</h2>
-<p>Veuillez vous connecter ou vous inscrire pour continuer votre achat</p>
+<h2 class="text-uppercase wow fadeInDown">Mon Profil</h2>
+<p class="wow fadeInUp">Bonjour , <?php echo $nom ;?></p>
 </div>
 </div>
 </div>
 </section>
 
-<section class="shop-content">
+
+<section class="team">
 <div class="container">
 <div class="row">
 <div class="col-md-12">
-<div class="row shop-login">
-<div class="col-md-12">
-<div class="box-content">
-<h3 class="text-center">CLIENT EXISTANT</h3>
-<br>
-<form class="logregform" method="post" enctype="multipart/form-data" >
+<div class="page-header wow fadeInDown">
+<h1>Mon Profil </h1>
+</div>
+</div>
+</div>
 <div class="row">
-<div class="form-group">
-<div class="col-md-12">
-<label>Nom d'utilisateur ou adresse e-mail</label>
-<input type="text" value="" class="form-control" name="email">
+<div class="col-md-12 text-center">
+<div class="team-staff wow fadeInUp" data-wow-delay="0.2s">
+<img src="<?php echo $image; ?>" class="img-responsive center-block" height="200" width="200" alt="" />
+<h4><?php echo $nom." ".$prenom;?></h4>
+<p>Email : <?php echo $email ;?></p>
+<p>Tel : <?php echo $tel ;?></p>
+<p>Adresse : <?php echo $prenom ;?></p>
+<p>Sexe : <?php echo $sexe ;?></p>
+<p>Date de naissance :  <?php echo $date_naiss ;?></p>
+    <form method="POST" action="ModifierProfil.php?id=<?PHP echo $id; ?>">
+        <input type="submit" class="btn btn-default" value= "Modifier">
+    </form>
 </div>
 </div>
-</div>
-<div class="clearfix"></div>
-<div class="row">
-<div class="form-group">
-<div class="col-md-12">
-<a class="pull-right" href="RecupererMdp.php">(Mot de passe perdu?)</a>
-<label>Mot de passe</label>
-<input type="password" value="" class="form-control" name="mdp">
-</div>
-</div>
-</div>
-<div class="clearfix"></div>
-<div class="row">
-<div class="col-md-6">
-<span class="remember-box checkbox">
-<label for="rememberme">
-<input type="checkbox" id="rememberme" name="rememberme">Remember Me
-</label>
-</span>
-</div>
-<div class="col-md-6">
-<input class="btn btn-default pull-right" type="submit" value="Se Connecter" name="connecter" id="connecter">
-</div>
-</div>
-</form>
-</div>
-</div>
-</div>
-</div>
+
+
 </div>
 </div>
 </section>
 
-    <?php include'footer.php'  ?>
+<?php include'footer.php'  ?>
 
 </div>
 </div>
@@ -228,5 +181,5 @@ Wide
 <script src="js/vendor/mc/main.js"></script>
 </body>
 
-<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/shop_account.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 11 Apr 2021 14:18:39 GMT -->
+<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 11 Apr 2021 14:18:34 GMT -->
 </html>

@@ -113,6 +113,10 @@ $reclamationC= new ReclamationC();
           <div class="col-md-12">
             <div class="card">
               <div class="card-body">
+              	    <form method="post" action="export.php">
+				     <input type="submit" name="export" class="btn btn-success" value="Export" />
+				    </form>
+
                 <div class="table-responsive">
                   <table class="table">
                     <thead class=" text-primary">

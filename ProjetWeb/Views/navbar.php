@@ -94,6 +94,7 @@
 <li><a href="MesReclamations.php">Mes Reclamations</a></li> 
 </ul>
 </li>
+<li><a href="MonProfil.php">Mon Profil</a></li>
 <li><a href="Deconnexion.php">Deconnexion</a></li>
             <?php 
           }

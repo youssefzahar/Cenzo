@@ -25,7 +25,7 @@ $(function()
 		messages: {
 			nomuser: {
 				required: "Champ obligatoire",
-				minlength: " Le nom doit contenir au moins 2 caractères",
+				minlength: " Le nom d'utilisatuer doit contenir au moins 2 caractères",
 			},
 			email: {
 				required: "Champ obligatoire",
