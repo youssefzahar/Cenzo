@@ -1,4 +1,12 @@
+
 <?php 
+
+$connect = mysqli_connect("localhost", "root", "", "projet_food");  
+$query ="SELECT * FROM reservation ORDER BY id_reservation desc";  
+$result = mysqli_query($connect, $query);
+
+
+
 include  "../Model/Reservation.php";
 include  "../Controller/ReservationC.php";
 
@@ -22,6 +30,7 @@ $reservationC= new ReservationC();
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
   <!-- CSS Files -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
@@ -46,6 +55,8 @@ $reservationC= new ReservationC();
               </button>
             </div>
             <a class="navbar-brand" href="#pablo">Liste Reservations</a>
+            
+            
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -83,6 +94,7 @@ $reservationC= new ReservationC();
                   <a class="dropdown-item" href="#">Action</a>
                   <a class="dropdown-item" href="#">Another action</a>
                   <a class="dropdown-item" href="#">Something else here</a>
+                  
                 </div>
               </li>
               <li class="nav-item">
@@ -104,9 +116,12 @@ $reservationC= new ReservationC();
         <div class="row">
           <div class="col-md-12">
             <div class="card">
+            <div class="card-header">
+                <h4 class="card-title"> Table Reservation</h4>
+              </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table">
+                  <table id="datatableid" class="table">
                     <thead class=" text-primary">
                       <th>
                         au nom de
@@ -130,7 +145,7 @@ $reservationC= new ReservationC();
         ?>
                                         <tr>
                                             <?php
-                                            $resultaa = $reservationC->affichernomprenom($row["id_client"]);
+                                            $resultaa = $reservationC->affichernomprenom($row["idclient"]);
                                             foreach($resultaa as $row2){
                                             ?>
                                             <td><?php echo $row2['nom']; ?> <?php echo $row2['prenom']; ?></td>
@@ -145,7 +160,7 @@ $reservationC= new ReservationC();
                                                     ?>
                                                 <td>
 
-                                                <form method="POST" action="NonApprouverReservation.php?id=<?PHP echo $row['id_reservation']; ?>">
+                                                <form method="POST" action="NonApprouverReservation.php?id_reservation=<?PHP echo $row['id_reservation']; ?>">
                                                     <input type="submit" class="btn btn-success" value= "Approuver">
                                                 </form>
                                                 </td>
@@ -155,7 +170,7 @@ $reservationC= new ReservationC();
                                                 {
                                                     ?>
                                                 <td>
-                                                <form method="POST" action="ApprouverReservation.php?id=<?PHP echo $row['id_reservation']; ?>">
+                                                <form method="POST" action="ApprouverReservation.php?id_reservation=<?PHP echo $row['id_reservation']; ?>">
                                                     <input type="submit" class="btn btn-warning" value= "Non Approuver">
                                                 </form>
                                                 </td>
@@ -166,14 +181,17 @@ $reservationC= new ReservationC();
                                             <td>
                                                <form method="POST" action="SupprimerReservation.php">
                                                     <input type="submit" class="btn btn-danger" value="supprimer">
-                                                    <input type="hidden" value="<?PHP echo $row['id_reservation']; ?>" name="reservation">
+                                                    <input type="hidden" value="<?PHP echo $row['id_reservation']; ?>" name="id_reservation">
                                                 </form>
                                             </td>
                                         </tr>
-
+                                      
+                                       
+                                       
         <?php
     }
-?>
+?> 
+<a href="export.php" input type="submit" class="btn btn-outline-success btn-lg " value="export" name="export"   >exporter</a>
                                     
                     </tbody>
                   </table>
@@ -218,6 +236,24 @@ $reservationC= new ReservationC();
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap.min.js"></script>
   <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+  <script>
+  $(document).ready(function() {
+    $('#datatableid').DataTable({
+      "pagingtype": "full_numbers","lengthMenu":[
+        [10, 25, 50, -1],
+        [10, 25, 50, "All"]
+    
+      ],
+      responsive: true,
+      language:{
+        search: "search",
+        searchPlaceholder: "Search here"
+      }
+    });
+} );
+</script>
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chart JS -->

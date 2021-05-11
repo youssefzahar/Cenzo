@@ -1,11 +1,30 @@
 <?php
+include "../Model/Menu.php";
+include "../Controller/MenuC.php";
+if(isset($_POST['Ajouter']))
+{
+if( isset($_POST['nom_plat']) and isset($_POST['prix_plat'])){
+$menu=new Menu($_POST['nom_plat'],$_POST['prix_plat']);
 
+    $filename = $_FILES["image_plat"]["name"];
+        $tempname = $_FILES["image_plat"]["tmp_name"];
 
-include  "../Controller/MenuC.php";
+    $folder = "./assets/images/menu/".$filename ;
+    move_uploaded_file($tempname, $folder);
 
-$menuc= new MenuC();
-$liste=$menuc->afficherMenus();
+//Partie3
+$menuC = new MenuC();
+$menuC->ajouterMenu($menu);
+$menuC->ajouterMenuimg($_POST['prix_plat'],$folder);
 
+header('Location: AfficherMenus.php');
+    
+}else{
+    echo "vérifieer les champs";
+    die();
+}
+//*/
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,13 +35,12 @@ $liste=$menuc->afficherMenus();
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Afficher les Menus
+    Ajouter Menu
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
   <!-- CSS Files -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
@@ -32,6 +50,7 @@ $liste=$menuc->afficherMenus();
 
 <body class="">
   <div class="wrapper ">
+      <div class="wrapper ">
        <?php include'sidebar.php'  ?>
     <div class="main-panel" id="main-panel">
       <!-- Navbar -->
@@ -45,7 +64,7 @@ $liste=$menuc->afficherMenus();
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Table List</a>
+            <a class="navbar-brand" href="#pablo">User Profile</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -105,59 +124,35 @@ $liste=$menuc->afficherMenus();
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> Table Menus</h4>
+                <h5 class="title">Ajouter Menu</h5>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
-                <form method="POST" action="AjouterMenu.php">
-                     <input type="submit" class="btn btn-succed" value="Ajouter" name="ajouter" href="AjouterQuestions.php">
-                  </form>
-                  <table id="datatableid" class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        Nom_plat
-                      </th>
-                      <th>
-                        Prix_plat
-                      </th>
-                      <th>
-                        Image_plat
-                      </th>
-                       <th>
-                        Modifier
-                      </th>
-                      <th>
-                        Supprimer
-                      </th>
-                    </thead>
-                    <tbody>
-                                    <?php
-                                    foreach($liste as $row){
-                      ?>
- 
-                                        <tr>
-                                            <td><?php echo $row['nom_plat']; ?></td>
-                                            <td><?php echo $row['prix_plat']; ?></td>
-                                            <td><img src="<?php echo $row['image_plat']; ?>" heigth="200" width=150></td>
-                                            
-                                              <td>
-                                                <form method="POST" action="ModifierMenu.php?id=<?PHP echo $row['id']; ?>">
-                                                    <input type="submit" class="btn btn-success" value= "Modifier">
-                                                </form>
-                                            </td>
-                                            <td>
-                                               <form method="POST" action="supprimerMenu.php">
-                                                    <input type="submit" class="btn btn-danger" value= "supprimer">
-                                                    <input type="hidden" value="<?PHP echo $row['id']; ?>" name="id">
-                                                </form></td>
-                                            
-                                      </tr>
-                                <?php
-                                }
-                                ?>
-                    </tbody>
-                  </table>
-                </div>
+                <form method="POST" enctype="multipart/form-data">
+                  <div class="row">
+                    <div class="col-md-6 pr-1">
+                      <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" class="form-control" placeholder="Nom" name="nom_plat">
+                      </div>
+                    </div>
+                    <div class="col-md-4 pl-1">
+                      <div class="form-group">
+                        <label>Prix</label>
+                        <input type="text" class="form-control" placeholder="Prix" name="prix_plat">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                  <label class="col-md-3 control-label">Image</label>
+                     <div >
+                      <div class="col-12">
+                        <input class="btn" input type="file" name="image_plat" >
+                      </div>
+                      </div>
+                  </div>
+                  <input type="submit" class="btn btn-sucess" value="Ajouter" name="Ajouter" >
+                </form>
               </div>
             </div>
           </div>
@@ -197,24 +192,6 @@ $liste=$menuc->afficherMenus();
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-  <script>
-  $(document).ready(function() {
-    $('#datatableid').DataTable({
-      "pagingtype": "full_numbers","lengthMenu":[
-        [10, 25, 50, -1],
-        [10, 25, 50, "All"]
-    
-      ],
-      responsive: true,
-      language:{
-        search: "search",
-        searchPlaceholder: "Search here"
-      }
-    });
-} );
-</script>
   <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>

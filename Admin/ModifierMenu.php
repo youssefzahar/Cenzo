@@ -1,29 +1,41 @@
 <?php
-include "../Model/menu.php";
+
+include "../Model/Menu.php";
 include "../Controller/MenuC.php";
-if($_POST['Ajouter'])
+
+if (isset($_GET['id'])){
+
+$menuC = new MenuC();
+$result=$menuC->recupererMenu($_GET['id']);
+foreach($result as $row){
+$id=$row['id'];
+$nom_plat=$row['nom_plat'];
+$prix_plat=$row['prix_plat'];
+$image_plat=$row['image_plat'];
+
+    }
+}
+if($_POST['Modifier'])
 {
-if( isset($_POST['id']) and isset($_POST['nom_plat']) and isset($_POST['prix_plat'])){
-$menu=new menu($_POST['id'],$_POST['nom_plat'],$_POST['prix_plat']);
 
-    $filename = $_FILES["image_plat"]["name"];
-        $tempname = $_FILES["image_plat"]["tmp_name"];
+$menu=new Menu($_POST['nom_plat'],$_POST['prix_plat']);
+        $menuC->modifierMenu($menu,$_GET['id']);
 
-    $folder = "./assets/images/menu".$filename ;
-    move_uploaded_file($tempname, $folder);
+  
 
-//Partie3
-$MenuC = new MenuC();
-$MenuC->AjouterMenus($Menu);
-$MenuC->AjouterMenuimg($_POST['id'],$folder);
+    $filename = $_FILES["image"]["name"];
+        $tempname = $_FILES["image"]["tmp_name"];
+
+    $folder = "./assets/images/menu/".$filename ;
+        if($filename!="")
+      {
+      move_uploaded_file($tempname, $folder);
+    $menuC->ajouterMenuimg($_POST['nom_plat'],$folder);
+
+    }
 
 header('Location: AfficherMenus.php');
     
-}else{
-    echo "vérifieer les champs";
-    die();
-}
-//*/
 }
 ?>
 <!DOCTYPE html>
@@ -35,7 +47,7 @@ header('Location: AfficherMenus.php');
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Ajouter Menu
+    Modifier Menu
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -124,29 +136,21 @@ header('Location: AfficherMenus.php');
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Ajouter menu</h5>
+                <h5 class="title">Modifier Menu</h5>
               </div>
               <div class="card-body">
                 <form method="POST" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
-                        <label>id</label>
-                        <input type="text" class="form-control" placeholder="id" name="id">
+                        <label>Nom</label>
+                        <input type="text" class="form-control" placeholder="Nom" name="nom_plat"  value="<?PHP echo $nom_plat ?>">
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">nom_plat</label>
-                        <input type="nom_plat" class="form-control" placeholder="nom_plat" name="nom_plat">
-                      </div>
-                    </div>
-                  </div>
-                  
-                    <div class="col-md-6 pl-1">
-                      <div class="form-group">
                         <label>Prix</label>
-                        <input type="text" class="form-control" placeholder="prix_plat" name="prix_plat">
+                        <input type="text" class="form-control" placeholder="Prix" name="prix_plat" value="<?PHP echo $prix_plat ?>" />
                       </div>
                     </div>
                   </div>
@@ -154,11 +158,11 @@ header('Location: AfficherMenus.php');
                   <label class="col-md-3 control-label">Image</label>
                      <div >
                       <div class="col-12">
-                        <input class="btn" input type="file" name="image_plat" >
+                        <input class="btn" input type="file" name="image_plat" value="<?PHP echo $image_plat ?>" >
                       </div>
                       </div>
                   </div>
-                  <input type="submit" class="btn btn-sucess" value="Ajouter" name="Ajouter" >
+                  <input type="submit" class="btn btn-sucess" value="Modifier" name="Modifier" >
                 </form>
               </div>
             </div>

@@ -7,6 +7,8 @@
 		try{
         self::$instance = new PDO('mysql:host=localhost;dbname=Projet_food', 'root', '');
 		self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	//	self::$instance->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+   
 		}catch(Exception $e){
             die('Erreur: '.$e->getMessage());
 		}

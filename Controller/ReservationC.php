@@ -4,25 +4,13 @@ class ReservationC{
 
     public function afficher($Reservation){
         $id_reservation=$Reservation->getid_reservation();
-        $categorie=$Reservation->getcategorie();
-        $id_client=$Reservation->getid_client();
-        $datet=$Reservation->getdate();
+        $idclient=$Reservation->getidclient();
+        $date=$Reservation->getdate();
         $num_table=$Reservation->getnum_table();
         $etat=$Reservation->getetat();
 
 }    
     
-    function rechercherTicket($str){
-        $sql="select * from Reservation where categorie like '%".$str."%' or date like '%".$str."%'";
-        $db = config::getConnexion();
-        try{
-            $liste=$db->query($sql);
-            return $liste;
-        }
-        catch (Exception $e){
-            return $e->getMessage();
-        }
-    }
 
 
 public function affichernomprenom($id){
@@ -73,7 +61,7 @@ public function afficherReservationsClient(){
     }
 }
 
-    function recupererReservation($id){
+    function recupererReservation($id_reservation){
         $sql="SELECT * from Reservation where id_reservation=$id_reservation";
         $db = config::getConnexion();
         try{
@@ -87,19 +75,19 @@ public function afficherReservationsClient(){
 
 
     function modifierReservation($Reservation,$id_reservation){
-        $sql="UPDATE Reservation SET id_client=:id_client,date=:date,num_table=:num_table,etat=:etat WHERE id=:id";
+        $sql="UPDATE Reservation SET idclient=:idclient, date=:date ,num_table=:num_table,etat=:etat WHERE id_reservation=:id_reservation";
         
         $db = config::getConnexion();
         //$db->sReservationtribute(PDO::ATTR_EMULATE_PREPARES,false);
 try{        
         $req=$db->prepare($sql);
-        $id_client=$Reservation->getId_client();
+        $idclient=$Reservation->getidclient();
         $date=$Reservation->getDate();
-        $num_table=$Reservation->getnum_table();
+        $num_table=$Reservation->getNum_table();
         $etat=$Reservation->getEtat();
-        $datas = array(':id'=>$id, ':id_client'=>$id_client,':date'=>$date,':num_table'=>$num_table,':etat'=>$etat);
-        $req->bindValue(':id',$id);
-        $req->bindValue(':id_client',$id_client);
+        $datas = array(':id_reservation'=>$id_reservation, ':idclient'=>$idclient,':date'=>$date,':num_table'=>$num_table,':etat'=>$etat);
+        $req->bindValue(':id_reservation',$id_reservation);
+        $req->bindValue(':idclient',$idclient);
         $req->bindValue(':date',$date);
         $req->bindValue(':num_table',$num_table);
         $req->bindValue(':etat',$etat);
@@ -151,15 +139,16 @@ try{
         
     }
 public function ajouterReservation($Reservation){
-    $sql="insert into Reservation(id_client,date,num_table,etat) values(:id_client,:date,:num_table,:etat)";
+    $sql="insert into Reservation(idclient,date,num_table,etat) values(:idclient,:date,:num_table,:etat)";
     $db=config::getConnexion();
     try{
     $req=$db->prepare($sql);
-        $id_client=$Reservation->getId_client();
+    
+        $idclient=$Reservation->getidclient();
         $date=$Reservation->getDate();
-        $num_table=$Reservation->getnum_table();
+        $num_table=$Reservation->getNum_table();
         $etat=$Reservation->getEtat();
-        $req->bindValue(':id_client',$id_client);
+        $req->bindValue(':idclient',$idclient);
         $req->bindValue(':date',$date);
         $req->bindValue(':num_table',$num_table);
         $req->bindValue(':etat',$etat);

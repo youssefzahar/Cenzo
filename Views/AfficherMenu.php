@@ -3,7 +3,7 @@ include  "../Model/menu.php";
 include  "../Controller/MenuC.php";
 
 $MenuC= new MenuC();
-$resultat=$MenuC->afficherMenus($_GET["categorie"]);
+$resultat=$MenuC->afficherMenus();
 
 
 ?>
@@ -92,9 +92,10 @@ $resultat=$MenuC->afficherMenus($_GET["categorie"]);
                         $id=$row['id'];
                     ?>
 <div class="menu-info">
-<img src="<?php echo $row['image_plat']; ?>" class="img-responsive" alt="" />
+
 <a href="menu_all.html">
 <div class="menu4-overlay">
+<img src="<?php echo $row['image_plat']; ?>" class="img-responsive" alt="" />
 <h4><a href="#"><?php echo $row['nom_plat']; ?></a></h4>
 <span class="price"> <?php echo $row['prix_plat']; ?> </span>
 </article>

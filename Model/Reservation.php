@@ -1,42 +1,45 @@
 <?PHP
 	class Reservation{
 		private $id_reservation;
-		private $id_client;
+		private $idclient;
 		private $date;
 		private $num_table;
 		private $etat;
 
-		function __construct($id_client,$date,$num_table,$etat){
+	public	function __construct($idclient,$date,$num_table,$etat){
 			
-			$this->id_client=$id_client;
+	
+			$this->idclient=$idclient;
 			$this->date=$date;
 			$this->num_table=$num_table;
 			$this->etat=$etat;
 		}
 		
-		function getId(){
+		function getId_reservation(){
 			return $this->id_reservation;
 		}
-		function getId_client(){
-			return $this->id_client;
+		function getIdclient(){
+			return $this->idclient;
 		}
-		function getdate(){
+		function getDate(){
 			return $this->date;
 		}
-		function getnum_table(){
+		function getNum_table(){
 			return $this->num_table;
 		}
 		function getEtat(){
 			return $this->etat;
 		}
 
-		function setId_client($id_client){
-			$this->id_client=$id_client;
+
+
+		function setIdclient($idclient){
+			$this->idclient=$idclient;
 		}
-		function setdate($date){
+		function setDate($date){
 			$this->date=$date;
 		}
-		function setnum_table($num_table){
+		function setNum_table($num_table){
 			$this->num_table=$num_table;
 		}
 		function setEtat($etat){

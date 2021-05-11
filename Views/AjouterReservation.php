@@ -27,6 +27,7 @@ $ReservationC->ajouterReservation($Reservation);
 header('Location: AjouterReservation.php'); 
 }
 
+
 ?>            
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +38,7 @@ header('Location: AjouterReservation.php');
 <title>Ajouter Reservation</title>
 <meta name="author" content="Surjith S M">
 
-<meta name="num_table" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
+<meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
 <meta name="keywords" content="tomato, responsive, html5, restaurant, template, food, reservation">
 
 <script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script><link rel="shortcut icon" href="img/favicon.ico">
@@ -98,14 +99,17 @@ header('Location: AjouterReservation.php');
 </div>
 </div>
 </div>
+
+
 <div class="reservation-form wow fadeInUp">
 <form class="contact-form" method="post">
 <div class="form-group">
-<label>Date</label>
-<input type="date" id="date" class="form-control" name="date" placeholder="Pick a date">
+<label>Date et Heure</label>
+<input type="datetime-local" id="date" class="form-control" name="date" >
+</div>
+</div>
 
-</div>
-</div>
+
 <div id="num_table" class="col-md-7">
 <div class="form-group">
 <label>Table de</label>
@@ -135,61 +139,8 @@ header('Location: AjouterReservation.php');
 <i class="fa fa-user"></i>
 </div>
 </div>
-<!--<div id="OT_time" class="col-md-4">
-<div class="form-group">
-<label>Time</label>
-<select name="ResTime" class="feedFormField">
-<option selected disabled>Pick a time</option>
-<option value="12:00 AM">12:00 AM</option>
-<option value="12:30 AM">12:30 AM</option>
-<option value="1:00 AM">1:00 AM</option>
-<option value="1:30 AM">1:30 AM</option>
-<option value="2:00 AM">2:00 AM</option>
-<option value="2:30 AM">2:30 AM</option>
-<option value="3:00 AM">3:00 AM</option>
-<option value="3:30 AM">3:30 AM</option>
-<option value="4:00 AM">4:00 AM</option>
-<option value="4:30 AM">4:30 AM</option>
-<option value="5:00 AM">5:00 AM</option>
-<option value="5:30 AM">5:30 AM</option>
-<option value="6:00 AM">6:00 AM</option>
-<option value="6:30 AM">6:30 AM</option>
-<option value="7:00 AM">7:00 AM</option>
-<option value="7:30 AM">7:30 AM</option>
-<option value="8:00 AM">8:00 AM</option>
-<option value="8:30 AM">8:30 AM</option>
-<option value="9:00 AM">9:00 AM</option>
-<option value="9:30 AM">9:30 AM</option>
-<option value="10:00 AM">10:00 AM</option>
-<option value="10:30 AM">10:30 AM</option>
-<option value="11:00 AM">11:00 AM</option>
-<option value="11:30 AM">11:30 AM</option>
-<option value="12:00 PM">12:00 PM</option>
- <option value="12:30 PM">12:30 PM</option>
-<option value="1:00 PM">1:00 PM</option>
-<option value="1:30 PM">1:30 PM</option>
-<option value="2:00 PM">2:00 PM</option>
-<option value="2:30 PM">2:30 PM</option>
-<option value="3:00 PM">3:00 PM</option>
-<option value="3:30 PM">3:30 PM</option>
-<option value="4:00 PM">4:00 PM</option>
-<option value="4:30 PM">4:30 PM</option>
-<option value="5:00 PM">5:00 PM</option>
-<option value="5:30 PM">5:30 PM</option>
-<option value="6:00 PM">6:00 PM</option>
-<option value="6:30 PM">6:30 PM</option>
-<option value="7:00 PM">7:00 PM</option>
-<option value="7:30 PM">7:30 PM</option>
-<option value="8:00 PM">8:00 PM</option>
-<option value="8:30 PM">8:30 PM</option>
-<option value="9:00 PM">9:00 PM</option>
-<option value="9:30 PM">9:30 PM</option>
-<option value="10:00 PM">10:00 PM</option>
-<option value="10:30 PM">10:30 PM</option>
-<option value="11:00 PM">11:00 PM</option>
-<option value="11:30 PM">11:30 PM</option>
-</select>
-<i class="fa fa-clock-o"></i>          -->
+
+
 </div>
 </div>
 </div>
@@ -200,9 +151,8 @@ header('Location: AjouterReservation.php');
 
 <div class="OT_hidden">
 <input type="hidden" class="OT_hidden" name="id_reservation" value="">
-<input type="hidden" class="OT_hidden" name="id_client" value="7">
-<!--<input type="hidden" class="OT_hidden" name="txtHidServerTime" value="6/26/2014 8:50 PM">-->
-<input type="hidden" class="OT_hidden" name="date" value="MM/dd/yyyy">
+<input type="hidden" class="OT_hidden" name="idclient" value="7">
+
 </div>
 </form>
 <noscript>&amp;lt;a href="http://www.omniture.com" title="Web Analytics"&amp;gt;&amp;lt;img src="http://o.opentable.com/b/ss/otrestref/1/H.22.1--NS/0" height="1" width="1" border="0" alt="" /&amp;gt;&amp;lt;/a&amp;gt;</noscript>
