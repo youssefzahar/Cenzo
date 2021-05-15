@@ -120,7 +120,7 @@
 
           <?php 
             $curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);  
-            if($curPageName=="evenement.php")
+            if($curPageName=="AfficherEvenement.php")
             {
 
              ?>
@@ -134,14 +134,14 @@
               <?php
             }
             ?>
-            <a href="evenement.php">
+            <a href="AfficherEvenement.php">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Gestion Evenement</p>
             </a>
           </li>
           <?php 
             $curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);  
-            if($curPageName=="fidelite.php")
+            if($curPageName=="AfficherFidelite.php")
             {
 
              ?>
@@ -155,7 +155,7 @@
               <?php
             }
             ?>
-            <a href="fidelite.php">
+            <a href="AfficherFidelite.php">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Gestion Fidelite</p>
             </a>
