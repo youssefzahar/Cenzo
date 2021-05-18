@@ -10,42 +10,28 @@
             Creative Tim
         </a>
     </div>
-
-
     <div class="sidebar-wrapper" id="sidebar-wrapper">
-
-
         <ul class="nav">
-        <!--  ------------->
-
             <?php
             $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
             if ($curPageName == "index.php")
             {
             ?>
         <li class="active ">
-
-
         <?php
         }
         else
         {
         ?>
-
-
             <li>
                 <?php
                 }
                 ?>
-
-
                 <a href="index.php">
                     <i class="now-ui-icons design_app"></i>
                     <p>Dashboard</p>
                 </a>
             </li>
-            <!--  ------------->
-
             <?php
             $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
             if ($curPageName == "AfficherAdmins.php")
@@ -67,9 +53,6 @@
                     <p>Gestion Admins</p>
                 </a>
             </li>
-
-            <!--  ------------->
-
             <?php
             $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
             if ($curPageName == "AfficherClients.php")
@@ -91,8 +74,6 @@
                     <p>Gestion Clients</p>
                 </a>
             </li>
-            <!--  ------------->
-
             <?php
             $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
             if ($curPageName == "AfficherReclamations.php")
@@ -114,8 +95,6 @@
                     <p>Gestion Reclamations</p>
                 </a>
             </li>
-            <!--  ------------->
-
             <?php
             $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
             if ($curPageName == "AfficherForums.php")
@@ -137,8 +116,6 @@
                     <p>Gestion Forums</p>
                 </a>
             </li>
-            <!--  ------------->
-
             <?php
             $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
             if (($curPageName == "commande.php")||($curPageName == "commandedetails.php"))
@@ -160,16 +137,12 @@
                     <p>Gestion Commande</p>
                 </a>
             </li>
-            <!--  ------------->
-
             <?php
             $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
             if ($curPageName == "recette.php")
             {
 
             ?>
-
-
             <li class="active ">
                 <?php
                 }
@@ -185,15 +158,12 @@
                     <p>Gestion Recette</p>
                 </a>
             </li>
-
-<!--  ------------->
             <?php
             $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
             if ($curPageName == "ingredient.php")
             {
 
             ?>
-
             <li class="active ">
                 <?php
                 }
@@ -211,9 +181,6 @@
             </li>
 
             </li>
-<!--  ------------->
-
-
             <?php
             $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
             if ($curPageName == "AfficherReservations.php")
@@ -235,9 +202,6 @@
                     <p>Gestion Reservations</p>
                 </a>
             </li>
-
-<!--  ------------->
-
             <?php
             $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
             if ($curPageName == "AfficherMenus.php")
@@ -259,19 +223,64 @@
                     <p>Gestion Menu</p>
                 </a>
             </li>
-<!--  ------------->
 
-            <li class="active-pro">
-                <a href="DeconnexionAdmin.php">
-                    <i class="now-ui-icons arrows-1_cloud-download-93"></i>
-                    <p>Se déconnecter</p>
+
+            
+            
+            
+            <?php
+            $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
+            if ($curPageName == "AfficherEvenement.php")
+            {
+
+            ?>
+            <li class="active ">
+                <?php
+                }
+                else
+                {
+                ?>
+            <li>
+                <?php
+                }
+                ?>
+                <a href="AfficherEvenement.php">
+                    <i class="now-ui-icons design_bullet-list-67"></i>
+                    <p>Gestion Evenement</p>
                 </a>
             </li>
 
 
+
+
+            <?php
+            $curPageName = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
+            if ($curPageName == "AfficherFidelite.php")
+            {
+
+            ?>
+            <li class="active ">
+                <?php
+                }
+                else
+                {
+                ?>
+            <li>
+                <?php
+                }
+                ?>
+                <a href="AfficherFidelite.php">
+                    <i class="now-ui-icons design_bullet-list-67"></i>
+                    <p>Gestion Fidelite</p>
+                </a>
+            </li>
+           
+
+            
+            
+
+
+
         </ul>
     </div>
-
-
-
 </div>

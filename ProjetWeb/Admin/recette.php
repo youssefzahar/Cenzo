@@ -261,9 +261,7 @@ if(isset($_POST['delete'])){
                                     </tbody>
                                 </table>
                             </div>
-                            <a href="generate_pdfrecette.php"  >
-                                pdf
-                            </a>
+                            <a href="generate_pdfrecette.php" input type="submit" class="btn btn-outline-success btn-lg " value="export" name="export"   >exporter</a>
                         </div>
                     </div>
                 </div>

@@ -25,7 +25,10 @@ $_SESSION['sum']=!isset($_SESSION['sum'])?0:$_SESSION['sum'];
                 </li>
 
                 <li><a href="shop_fullwidth.php">Menu</a></li>
+                <li><a href="evenement.php">Evenement</a></li>
+
                 <li><a href="AjouterReservation.php">Reservation</a></li>
+                
 
                 <li><a href="recipe.php">Recette</a></li>
                     <?php if (isset($_SESSION['idclient'])) {

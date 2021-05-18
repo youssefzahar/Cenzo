@@ -1,23 +1,3 @@
-<?php  
- $connect = mysqli_connect("localhost","root","");  
- $db = mysqli_select_db($connect, 'cenzo3.0v');
- $query = "SELECT prix_plat, count(*) as number FROM menu GROUP BY prix_plat";  
- $result = mysqli_query($connect, $query);  
- 
-
- ?> 
-<?php
-
-
-
-include  "../Controller/MenuC.php";
-
-$menuc= new MenuC();
-$liste=$menuc->afficherMenus();
-//$list=$menuC->afficherMenusNom_plat();
-
-?>
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -26,8 +6,11 @@ $liste=$menuc->afficherMenus();
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Afficher les Menus
+    Afficher Les Evenement
   </title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -38,39 +21,6 @@ $liste=$menuc->afficherMenus();
   <link href="assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="assets/demo/demo.css" rel="stylesheet" />
-
-
-  <title>Webslesson Tutorial | Make Simple Pie Chart by Google Chart API with PHP Mysql</title>  
-           <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>  
-           <script type="text/javascript">  
-           google.charts.load('current', {'packages':['corechart']});  
-           google.charts.setOnLoadCallback(drawChart);  
-           function drawChart()  
-           {  
-                var data = google.visualization.arrayToDataTable([  
-                          ['prix_plat', 'Number'],  
-                          <?php  
-                          while($row = mysqli_fetch_array($result))  
-                          {  
-                               echo "['".$row["prix_plat"]."', ".$row["number"]."],";  
-                          }  
-                          ?>  
-                     ]);  
-                var options = {  
-                      title: 'Statistiques de nos prix de plats',  
-                      is3D:true,  
-                      pieHole: 0.4  
-                     };  
-                var chart = new google.visualization.PieChart(document.getElementById('piechart'));  
-                chart.draw(data, options);  
-           }  
-           </script>  
-
-
-
-
-
-
 </head>
 
 <body class="">
@@ -148,125 +98,108 @@ $liste=$menuc->afficherMenus();
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> Table Menus</h4>
+                <h4 class="card-title"> Table Evenement</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
+                <div class="container">
 
-                <fieldset >
+            <div class="row">
+                
+                <div class="col-md-6">
+                    <a href="insertdata.php" class="btn btn-success"> Ajouter </a>    
+                </div>
+                <div class="col-md-6">
+                    <a href="exportevent.php" class="btn btn-info"> Export Excel </a>    
+                </div>
+                <div class="col-md-12">
+                </div>
+            </div>
 
+            
 
-</fieldset>
-</form> 
-                <div id="piechart" style="width: 900px; height: 500px;"></div>
+            <?php
+                $connection = mysqli_connect("localhost","root","");
+                $db = mysqli_select_db($connection, 'cenzo3.0v');
 
+                $query = "SELECT * FROM evenement";
+                $query_run = mysqli_query($connection, $query);
+            ?>
 
+            <div class="row">
+                <div class="col-md-12">
+                <div class="table-responsive" id="employee_table">  
+                    <table class="table table-none-bordered" style="background-color: white;">
+                        <thead class="table-white">
+                            <tr>
+                                <th><a class="column_sort" id="id" data-order="desc" href="#">ID</a></th>  
+                               <th><a class="column_sort" id="nom_evenement" data-order="desc" href="#">Nom Evenement</a></th>  
+                               <th><a class="column_sort" id="date_debut" data-order="desc" href="#">Date Debut</a></th>  
+                               <th><a class="column_sort" id="date_fin" data-order="desc" href="#">Date Fin</a></th>
+                               <th> Image </th>                               
+                                <th> EDIT </th>
+                                <th> DELETE </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                        
+                        <?php
+                        if($query_run)
+                        {
+                            while($row = mysqli_fetch_array($query_run))
+                            {
+                                ?>
+                                    <tr>
+                                        <th> <?php echo $row['id']; ?> </th>
+                                        <th> <?php echo $row['nom_evenement']; ?> </th>
+                                        <th> <?php echo $row['date_debut']; ?> </th>
+                                        <th> <?php echo $row['date_fin']; ?> </th>
+                                        <th><img src= "<?php echo $row['IMAGE']?>" accept="image/png,image/jpeg" width="100" height="100"> </th>
+                                        <th> 
+                                            <form action="updatedata.php" method="post">
+                                                <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
+                                                <input type="submit" name="edit" class="btn btn-success" value="EDIT">
+                                            </form>
+                                        </th>
+                                        <th> 
+                                            <form action="delete.php" method="post">
+                                                <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
+                                                <input type="submit" name="delete" class="btn btn-danger" value="DELETE"> 
+                                            </form>
+                                        </th>
+                                    </tr>
+                                <?php
+                                }
+                            }
+                            else
+                            {
+                                ?>
+                                    <tr>    
+                                        <th colspan="6"> No Record Found </th>
+                                    </th>
+                                <?php
+                            }
+                        ?>
+                        </tbody>
+                    </table>
+                    <br>
+                    <br>
+                    <h4>Recherche</h4>
 
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Webslesson Tutorial</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
- 
-  <div class="container">
+                    <div class="container">
    <br />
-   <h2 align="center"> Recherche Menu</h2><br />
    <div class="form-group">
-    <div class="input-group">
      <span class="input-group-addon">Search</span>
-     <input type="text" name="search_text" id="search_text" placeholder="Search by Menu details" class="form-control" />
+     <input type="text" name="search_text" id="search_text" placeholder="Search by Customer Details" class="form-control" />
     </div>
    </div>
    <br />
    <div id="result"></div>
-  </div>
- 
-
-
-<script>
-$(document).ready(function(){
-
- load_data();
-
- function load_data(query)
- {
-  $.ajax({
-   url:"fetchmenu.php",
-   method:"POST",
-   data:{query:query},
-   success:function(data)
-   {
-    $('#result').html(data);
-   }
-  });
- }
- $('#search_text').keyup(function(){
-  var search = $(this).val();
-  if(search != '')
-  {
-   load_data(search);
-  }
-  else
-  {
-   load_data();
-  }
- });
-});
-</script>
-
-
-
-
-
-                <form method="POST" action="AjouterMenu.php">
-                     <input type="submit" class="btn btn-succed" value="Ajouter" name="ajouter" href="AjouterQuestions.php">
-                  </form>
-                  <table id="datatableid" class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        Nom_plat
-                      </th>
-                      <th>
-                        Prix_plat
-                      </th>
-                      <th>
-                        Image_plat
-                      </th>
-                       <th>
-                        Modifier
-                      </th>
-                      <th>
-                        Supprimer
-                      </th>
-                    </thead>
-                    <tbody>
-                                    <?php
-                                    foreach($liste as $row){
-                      ?>
- 
-                                        <tr>
-                                            <td><?php echo $row['nom_plat']; ?></td>
-                                            <td><?php echo $row['prix_plat']; ?></td>
-                                            <td><img src="<?php echo $row['image_plat']; ?>" heigth="200" width="150"></td>
-                                            
-                                              <td>
-                                                <form method="POST" action="ModifierMenu.php?id=<?PHP echo $row['id']; ?>">
-                                                    <input type="submit" class="btn btn-success" value= "Modifier">
-                                                </form>
-                                            </td>
-                                            <td>
-                                               <form method="POST" action="supprimerMenu.php">
-                                                    <input type="submit" class="btn btn-danger" value= "supprimer">
-                                                    <input type="hidden" value="<?PHP echo $row['id']; ?>" name="id">
-                                                </form></td>
-                                            
-                                      </tr>
-                                <?php
-                                }
-                                ?>
-                    </tbody>
-                  </table>
                 </div>
+            </div>
+
+        </div>
+    </div>
               </div>
             </div>
           </div>
@@ -334,15 +267,67 @@ $(document).ready(function(){
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
- 
 </body>
-
 </html>
 
+<script>
+$(document).ready(function(){
 
-<!--<br /><br />  
-           <div style="width: 10 px;px;">  
-                <h3 align="center">Make Simple Pie Chart by Google Chart API with PHP Mysql</h3>  
-                <br />  
-                <div id="piechart" style="width: 900px; height: 500px;"></div>  
-           </div>  -->
+ load_data();
+
+ function load_data(query)
+ {
+  $.ajax({
+   url:"fetch.php",
+   method:"POST",
+   data:{query:query},
+   success:function(data)
+   {
+    $('#result').html(data);
+   }
+  });
+ }
+ $('#search_text').keyup(function(){
+  var search = $(this).val();
+  if(search != '')
+  {
+   load_data(search);
+  }
+  else
+  {
+   load_data();
+  
+  }
+ });
+});
+</script>
+
+<script>  
+ $(document).ready(function(){  
+      $(document).on('click', '.column_sort', function(){  
+           var column_name = $(this).attr("id");  
+           var order = $(this).data("order");  
+           var arrow = '';  
+           //glyphicon glyphicon-arrow-up  
+           //glyphicon glyphicon-arrow-down  
+           if(order == 'desc')  
+           {  
+                arrow = '&nbsp;<span class="glyphicon glyphicon-arrow-down"></span>';  
+           }  
+           else  
+           {  
+                arrow = '&nbsp;<span class="glyphicon glyphicon-arrow-up"></span>';  
+           }  
+           $.ajax({  
+                url:"sortevent.php",  
+                method:"POST",  
+                data:{column_name:column_name, order:order},  
+                success:function(data)  
+                {  
+                     $('#employee_table').html(data);  
+                     $('#'+column_name+'').append(arrow);  
+                }  
+           })  
+      });  
+ });  
+ </script>  

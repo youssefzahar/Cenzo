@@ -154,6 +154,12 @@ $dernier_access=$row['dernier_acc'];
                 <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
                   <i class="fab fa-google-plus-g"></i>
                 </button>
+                <li class="active-pro">
+                <a href="DeconnexionAdmin.php">
+                    <i class="now-ui-icons arrows-1_cloud-download-93"></i>
+                    <p>Se déconnecter</p>
+                </a>
+            </li> 
               </div>
             </div>
           </div>

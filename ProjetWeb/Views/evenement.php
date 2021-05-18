@@ -1,60 +1,11 @@
 <?php
-require_once '../controller/commandeC.php';
-require_once '../controller/ligneCommandeC.php';
-require_once '../model/commande.php';
-require_once '../model/ligneCommande.php';
-include "../Model/menu.php";
-include "../Controller/MenuC.php";
-
-
-
 session_start();
 $_SESSION['foods']=!isset($_SESSION['foods'])?array():$_SESSION['foods'];
 $_SESSION['sum']=!isset($_SESSION['sum'])?0:$_SESSION['sum'];
-
-
-
-if(isset($_GET['action'])){
-    session_unset();
-    header('Location: shop_fullwidth.php');
-}
-
-if (isset($_POST['sumbitpanier'])) {
-
-    $food = new stdClass();
-
-    $food->id = $_POST['idproduit'];
-    $food->price = $_POST['prix'];// * $_GET['quantity'];
-    $food->name = $_POST['nom'];
-    $food->quantity=1;
-    $_SESSION['sum'] += $food->price;
-
-    $exist = false;
-
-    foreach ($_SESSION['foods'] as $f) {
-        if ($f->id == $food->id) {
-            $exist = true;
-            $f->quantity += $food->quantity;
-        }
-    }
-
-    if ($exist != true) {
-        if (array_push($_SESSION['foods'], $food)) {
-            header('Location: shop_fullwidth.php');
-        } else {
-            die(json_encode("Problem Adding to card"));
-        }
-    }
-}
-
-$MenuC = new MenuC();
-$plats = $MenuC->afficherMenus();
-
-//$platsC = new platsC();
-//$plats = $platsC->afficherPlats();
-
-
 ?>
+
+
+
 
 
 
@@ -104,75 +55,68 @@ $plats = $MenuC->afficherMenus();
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h2 class="text-uppercase">Menu</h2>
-                        <p>Decouvrez notre Menu</p>
+                        <h2 class="text-uppercase">Les Des Evenements</h2>
+                        <p>Tomato is a delicious restaurant website template</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="shop-content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-               
+        <?php
+                $connection = mysqli_connect("localhost","root","");
+                $db = mysqli_select_db($connection, 'cenzo3.0v');
 
-                        <div class="shop-products">
-                            <div class="row">
-                                <?php
-                                foreach ($plats as $plat) {
-                                    ?>
-                                    <div class="col-md-4 col-sm-6">
-                                        <div class="product-info">
-                                            <div class="product-img">
-                                                <img class="img-responsive" src="../Admin/<?php echo $plat['image_plat'] ?> " heigth="400px" width="260px" alt=""/>
-                                            </div>
-                                            <h4><a href="recipe_detail-image.html"><?php echo $plat['nom_plat'] ?></a></h4>
-                                            <div class="rc-ratings">
-                                                <span class="fa fa-star active"></span>
-                                                <span class="fa fa-star active"></span>
-                                                <span class="fa fa-star active"></span>
-                                                <span class="fa fa-star"></span>
-                                                <span class="fa fa-star"></span>
-                                            </div>
-                                            <div class="product-price"><?php echo $plat['prix_plat'] ?></div>
-                                            <div class="shop-meta">
-                                                <form class="shop-meta" method="POST">
+                $query = "SELECT * FROM evenement";
+                $query_run = mysqli_query($connection, $query);
+            ?>
 
-
-                                                    <input name="idproduit" value="<?php echo $plat['id'] ?>" hidden>
-                                                    <input name="nom" value="<?php echo $plat['nom_plat'] ?>" hidden>
-                                                    <input name="prix" value="<?php echo $plat['prix_plat'] ?>" hidden>
-
-                                                    <button name="sumbitpanier" class=""><i
-                                                                class="fa fa-shopping-cart"></i> Add to cart
-                                                    </button>
-                                                    <a href="shop_right_sidebar.html" class="pull-right"><i
-                                                                class="fa fa-heart-o"></i> Wishlist</a>
-                                                </form>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }
+            <div class="row">
+                <div class="col-md-12">
+                <div class="table-responsive" id="employee_table">  
+                    <table class="table table-none-bordered" style="background-color: white;">
+                        <thead class="table-white">
+                            <tr>
+                               <th><a class="column_sort" id="nom_evenement" data-order="desc" href="#">Nom Evenement</a></th>  
+                               <th><a class="column_sort" id="date_debut" data-order="desc" href="#">Date Debut</a></th>  
+                               <th><a class="column_sort" id="date_fin" data-order="desc" href="#">Date Fin</a></th>
+                               <th> Image </th>                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                                        
+                        <?php
+                        if($query_run)
+                        {
+                            while($row = mysqli_fetch_array($query_run))
+                            {
                                 ?>
-                            </div>
-                        </div>
-                        <a href="index.html" class="btn btn-default load-more">Load more</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        
+                                    <tr>
+                                        <th> <?php echo $row['nom_evenement']; ?> </th>
+                                        <th> <?php echo $row['date_debut']; ?> </th>
+                                        <th> <?php echo $row['date_fin']; ?> </th>
+                                        <th><img src= "<?php echo $row['IMAGE']?>" accept="image/png,image/jpeg" width="100" height="100"> </th>
+                                    </tr>
+                                <?php
+                                }
+                            }
+                            else
+                            {
+                                ?>
+                                    <tr>    
+                                        <th colspan="6"> No Record Found </th>
+                                    </th>
+                                <?php
+                            }
+                        ?>
+                        </tbody>
+                    </table>
 
         <section class="subscribe">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        
-                        <p>by houssem</p>
+                        <h1>Subscribe</h1>
+                        <p>Get updates about new dishes and upcoming events</p>
                         <form class="form-inline"
                               action="https://demo.web3canvas.com/themeforest/tomato/php/subscribe.php" id="invite"
                               method="POST">
@@ -194,7 +138,9 @@ $plats = $MenuC->afficherMenus();
                 <div class="row">
                     <div class="col-md-4 col-sm-12">
                         <h1>About us</h1>
-                        <p>Cenzo is an italian restaurant in tunisia.</p>
+                        <p>Duis leo justo, condimentum at purus eu,Aenean sed dolor sem. Etiam massa libero, auctor
+                            vitae egestas et, accumsan quis nunc.Duis leo justo, condimentum at purus eu, posuere
+                            pretium tellus.</p>
                         <a href="about.html">Read more &rarr;</a>
                     </div>
                     <div class="col-md-4  col-sm-6">
@@ -217,11 +163,11 @@ $plats = $MenuC->afficherMenus();
                     <div class="col-md-4  col-sm-6">
                         <h1>Reach us</h1>
                         <div class="footer-social-icons">
-                            <a href="https://www.facebook.com/houssem.set/">
+                            <a href="https://www.facebook.com/">
                                 <i class="fa fa-facebook-square"></i>
                             </a>
-                            <a href="https://www.instagram.com/houssemsettie/">
-                                <i class="fa fa-instagram"></i>
+                            <a href="https://www.twitter.com/">
+                                <i class="fa fa-twitter"></i>
                             </a>
                             <a href="https://plus.google.com/">
                                 <i class="fa fa-google"></i>
@@ -240,8 +186,8 @@ $plats = $MenuC->afficherMenus();
                             </a>
                         </div>
                         <div class="footer-address">
-                            <p><i class="fa fa-map-marker"></i>46,Rue du lac durable,lac2</p>
-                            <p><i class="fa fa-phone"></i>Phone: (+216) 53 821 350</p>
+                            <p><i class="fa fa-map-marker"></i>28 Seventh Avenue, Neew York, 10014</p>
+                            <p><i class="fa fa-phone"></i>Phone: (415) 124-5678</p>
                             <p><i class="fa fa-envelope-o"></i><a
                                         href="https://demo.web3canvas.com/cdn-cgi/l/email-protection"
                                         class="__cf_email__"
@@ -256,8 +202,8 @@ $plats = $MenuC->afficherMenus();
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <p><i class="fa fa-copyright"></i> Cenzo 2021. <i
-                                        class="fa fa-heart primary-color"></i> by POF</p>
+                            <p><i class="fa fa-copyright"></i> 2015.Tomato.All rights reserved. Designed with <i
+                                        class="fa fa-heart primary-color"></i> by Surjithctly</p>
                         </div>
                     </div>
                 </div>
@@ -265,9 +211,6 @@ $plats = $MenuC->afficherMenus();
         </section>
     </div>
 </div>
-
-
-
 
 <div class="b-settings-panel">
     <div class="settings-section">

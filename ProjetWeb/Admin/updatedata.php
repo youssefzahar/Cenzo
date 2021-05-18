@@ -1,23 +1,3 @@
-<?php 
-
-session_start();
-
-if(!isset($_SESSION['login']))
-{
-
-    header("location: Login.php");
-}
-
-include  "../Model/Forum.php";
-include  "../Controller/ForumC.php";
-
-$forumC= new ForumC();
-    $liste=$forumC->afficherForums();
-    $list=$forumC->afficherForumsCategorie();
-
-?>
-
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -26,49 +6,23 @@ $forumC= new ForumC();
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Afficher Forums
+    Afficher Les Evenement
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
   <!-- CSS Files -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="assets/demo/demo.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-
-            var data = google.visualization.arrayToDataTable([
-                ['Forum', 'Categories'],
-                <?php
-                    foreach ($list as $row){
-                ?>
-                ['<?php echo $row['categorie']; ?>', <?php echo $forumC->NombreCategorie($row['categorie']);  ?>],
-                <?php
-                }
-                ?>
-                ['', 0]
-            ]);
-
-            var options = {
-                title: 'Les Statistiques'
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-            chart.draw(data, options);
-        }
-    </script></head>
+</head>
 
 <body class="">
   <div class="wrapper ">
-   <?php include'sidebar.php'  ?>
+       <?php include'sidebar.php'  ?>
     <div class="main-panel" id="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
@@ -81,7 +35,7 @@ $forumC= new ForumC();
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Liste Forums</a>
+            <a class="navbar-brand" href="#pablo">Table List</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -91,7 +45,7 @@ $forumC= new ForumC();
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <form>
               <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search..." id="rech">
+                <input type="text" value="" class="form-control" placeholder="Search...">
                 <div class="input-group-append">
                   <div class="input-group-text">
                     <i class="now-ui-icons ui-1_zoom-bold"></i>
@@ -122,7 +76,7 @@ $forumC= new ForumC();
                 </div>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="MonProfil.php">
+                <a class="nav-link" href="#pablo">
                   <i class="now-ui-icons users_single-02"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Account</span>
@@ -140,55 +94,103 @@ $forumC= new ForumC();
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-body">
-               
-               <!-- <div class="table-responsive">
-                 <form class="form-inline" method="POST" action="pdfForum.php" >
-                      <fieldset >
+              <div class="card-header">
+                <h4 class="card-title"> Modifier Evenement</h4>
+              </div>
+              <body>
+    <?php
+    $connection = mysqli_connect("localhost","root","");
+    $db = mysqli_select_db($connection, 'cenzo3.0v');
 
-                      <div class="form-group">
-                  
-                  
-                  <input type="submit" name="telecharger pdf" value="telecharger pdf" class="btn btn-info">
-                </div>
-                      </fieldset>
-                    </form> 
-                    -->
-                                      <div id="piechart" style="width: 900px; height: 500px;"></div>
+    $id = $_POST['id'];
 
-                  <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        Categorie
-                      </th>
-                      <th>
-                        Par
-                      </th>
-                      <th>
-                        Sujet
-                      </th>
-                      <th>
-                        Description
-                      </th>
-                      <th>
-                        Commentaire
-                      </th>
-                      <th>
-                        Etat
-                      </th>
-                      <th>
-                        Date Creation
-                      </th>
-                      <th>
-                        Supprimer
-                      </th>
-                    </thead>
-                    <tbody id="tableau">
-                       
-                                    
-                    </tbody>
-                  </table>
+    $query = "SELECT * FROM evenement WHERE id='$id' ";
+    $query_run = mysqli_query($connection, $query);
+
+    if($query_run)
+    {
+        while($row = mysqli_fetch_array($query_run))
+        {
+            ?>
+            <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                        <form action="" method="post">
+                                <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
+                                <div class="form-group">
+                                    <label for=""> Nom Evenement </label>
+                                    <input type="text" name="nom_evenement" class="form-control" value="<?php echo $row['nom_evenement'] ?>" placeholder="Enter Nom Evenement" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for=""> Date Debut </label>
+                                    <input type="date" name="date_debut" class="form-control" value="<?php echo $row['date_debut'] ?>" placeholder="Enter Date Debut" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for=""> Date Fin </label>
+                                    <input type="date" name="date_fin" class="form-control" value="<?php echo $row['date_debut'] ?>" placeholder="Enter Date Fin" required>
+                                </div>
+
+                                <div class="form-group">
+                        </br> <label style="font-weight: bold">Ajouter une photo</label></br>
+                                        <input type="file" name="IMAGE" accept="image/png,image/jpeg" value="<?php echo $row['IMAGE'] ?>" required>
+                        </div>
+
+                                <button type="submit" name="update" class="btn btn-primary"> Update Data </button>
+
+                                <a href="AfficherEvenement.php" class="btn btn-danger"> CANCEL </a>
+                            </form>
+
+                        </div>
+                    </div>
+                    
+                    <?php
+                    if(isset($_POST['update']))
+                    {
+                        $nom_evenement = $_POST['nom_evenement'];
+                        $date_debut = $_POST['date_debut'];
+                        $date_fin = $_POST['date_fin'];
+                        $IMAGE = $_POST['IMAGE'];
+
+
+                        $query = "UPDATE evenement SET nom_evenement='$nom_evenement', date_debut='$date_debut', date_fin=' $date_fin', IMAGE=' $IMAGE' WHERE id='$id'  ";
+                        $query_run = mysqli_query($connection, $query);
+
+                        if($query_run)
+                        {
+                            echo '<script> alert("Data Updated"); </script>';
+                            header("location:AfficherEvenement.php");
+                        }
+                        else
+                        {
+                            echo '<script> alert("Data Not Updated"); </script>';
+                        }
+                    }
+                    ?>
+
                 </div>
+            </div>
+            <?php
+        }
+    }
+    else
+    {
+        // echo '<script> alert("No Record Found"); </script>';
+        ?>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>No Record Found</h4>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+    ?>
+</body>
+              
+
+        </div>
+    </div>
               </div>
             </div>
           </div>
@@ -228,6 +230,24 @@ $forumC= new ForumC();
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+  <script>
+  $(document).ready(function() {
+    $('#datatableid').DataTable({
+      "pagingtype": "full_numbers","lengthMenu":[
+        [10, 25, 50, -1],
+        [10, 25, 50, "All"]
+    
+      ],
+      responsive: true,
+      language:{
+        search: "search",
+        searchPlaceholder: "Search here"
+      }
+    });
+} );
+</script>
   <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
@@ -238,37 +258,6 @@ $forumC= new ForumC();
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type = "text/javascript">
-        $(document).ready(function(){
-            load_data();
-            function load_data(str)
-            {
-                $.ajax({
-                    url:"AjaxForum.php",
-                    method:"post",
-                    data:{str:str},
-                    success:function(data)
-                    {
-                        $('#tableau').html(data);
-                    }
-                });
-            }
-
-            $('#rech').keyup(function(){
-                var recherche = $(this).val();
-                if(recherche != '')
-                {
-                    load_data(recherche);
-                }
-                else
-                {
-                    load_data();
-                }
-            });
-        });
-    </script>
-
 </body>
 
 </html>

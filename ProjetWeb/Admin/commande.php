@@ -158,6 +158,8 @@ if((isset($_POST['sendmail']))&&(isset($_POST['mail']))&&(isset($_POST['message'
                         <div class="card-header">
                             <!-- --------------------------------------------------------- -->
 
+
+
                             <h4 class="card-title"> commande Table</h4>
                         </div>
                         <div class="card-body">
@@ -254,9 +256,7 @@ if((isset($_POST['sendmail']))&&(isset($_POST['mail']))&&(isset($_POST['message'
 
                                     </tbody>
                                 </table>
-                                <a href="generate_pdf.php"  >
-                                    pdf
-                                </a>
+                                <a href="generate_pdf.php" input type="submit" class="btn btn-outline-success btn-lg " value="export" name="export "   >exporter en pdf</a>
 
                             </div>
                         </div>
@@ -304,8 +304,12 @@ if((isset($_POST['sendmail']))&&(isset($_POST['mail']))&&(isset($_POST['message'
                         </div>
                     </form>
                 </div>
+
             </div>
+
+
         </div>
+        
         <footer class="footer">
             <div class=" container-fluid ">
                 <nav>
